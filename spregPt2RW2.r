@@ -1,6 +1,6 @@
 library(dplyr)
 library(readstata13)
-setwd("../Pt2Marices-selected")
+setwd("../Pt2Matrices-selected")
 
 ## Part1 Read the data files as matrix
 ## 4 Network Matrix

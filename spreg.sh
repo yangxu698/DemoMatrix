@@ -2,7 +2,7 @@
 #$ -M yxu6@nd.edu
 #$ -m abe
 #$ -pe smp 1
-#$ -q debug ##*@@emichaellab
+#$ -q long ##*@@emichaellab
 #$ -N USA_test
 
 module load R

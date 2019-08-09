@@ -29,7 +29,7 @@ DMseN = as.data.frame(c())
 DMtstatsN = as.data.frame(c())
 deltaN = as.data.frame(c())
 
-for ( i in 1:len(focus) ){
+for ( i in 1:length(focus) ){
 ##     d_cf_rhoN =   ## 10860x1
 ##     d_cf_phiN = d_cf_phiN1[,i]
 ##     d_cf_betaN = d_cf_betaN1[,i]

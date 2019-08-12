@@ -1,7 +1,10 @@
 library(dplyr)
 library(readstata13)
+library(foreach)
+library(doParallel)
 setwd("../Pt2Matrices-selected")
-
+source("tstas_fun.r")
+core_number = 4
 ## Part1 Read the data files as matrix
 ## 4 Network Matrix
 ## 2 var-cov Matrix
@@ -15,12 +18,13 @@ estcfN = read.dta13("estcfN.dta") %>% as.matrix()
 estcfN1 = read.dta13("estcfN1.dta") %>% as.matrix()
 
 ## Calculation of rho, phi, beta
+estcfN1_inverse = solve(estcfN1)
 
-d_cf_rhoN1 = estcfN %*% W_N %*% solve(estcfN1) ## 10860*10860x10860*10860
+d_cf_rhoN1 = estcfN %*% W_N %*% estcfN1_inverse ## 10860*10860x10860*10860
 
-d_cf_phiN1 = estcfN %*% solve(estcN1) ## 10860x10860
+d_cf_phiN1 = estcfN %*% estcfN1_inverse  ## 10860x10860
 
-d_cf_betaN1 =  solve(estcfN1) ## 10860x10860
+d_cf_betaN1 =  estcfN1_inverse ## 10860x10860
 
 VCVMn = VCVM[c(1,5,6), c(1,5,6)]  ## 3*3
 
@@ -29,25 +33,25 @@ DMseN = as.data.frame(c())
 DMtstatsN = as.data.frame(c())
 deltaN = as.data.frame(c())
 
-for ( i in 1:length(focus) ){
-##     d_cf_rhoN =   ## 10860x1
-##     d_cf_phiN = d_cf_phiN1[,i]
-##     d_cf_betaN = d_cf_betaN1[,i]
+registerDoParallel(cores_number)
+Result = foreach ( i in 1:length(focus), .combine = 'cbind')  %dopar% {
 
-    d_cfN = cbind(d_cf_rhoN1[,i], d_cf_phiN1[,i], d_cf_betaN1[,i]) ## 10860x3
+    tstats_fun(i)
+##    d_cfN = cbind(d_cf_rhoN1[,i], d_cf_phiN1[,i], d_cf_betaN1[,i]) ## 10860x3
+##
+##    deltaN1 = d_cfN %*% VCVMn %*% t(d_cfN) ## 10860x3 * 3*3 * 3*10860
+##    temp_deltaN = diag(deltaN1) ## 10860
+##
+##    temp_DMseN = sqrt( temp_deltaN[focus] )
+##    temp_DMtstatsN = estcfN[,i]/temp_DMseN
 
-    deltaN1 = d_cfN %*% VCVMn %*% t(d_cfN) ## 10860x3 * 3*3 * 3*10860
-    temp_deltaN = diag(deltaN1) ## 10860
-
-    temp_DMseN = sqrt( temp_deltaN[focus] )
-    temp_DMtstatsN = estcfN[,i]/temp_DMseN
-
-    DMseN = cbind(DMseN, temp_DMseN)
-    DMtstatsN = cbind(DMtstatsN, temp_DMtstatsN)
+##    DMseN = cbind(DMseN, temp_DMseN)
+##    DMtstatsN = cbind(DMtstatsN, temp_DMtstatsN)
 }
 
-write.csv(DMseN, "DMseN.csv", row.names = FALSE)
-write.csv(DMtstatsN, "DMtstatsN.csv", row.names = FALSE)
+write.csv(Result, "../DemoMatrix/Result.csv", row.names = FALSE)
+## write.csv(DMseN, "../DemoMatrix/DMseN.csv", row.names = FALSE)
+## write.csv(DMtstatsN, "../DemoMatrix/DMtstatsN.csv", row.names = FALSE)
 
 
 ## W_A = read.dta13("W_A.dta") %>% select(afg1900:zzb20175) %>% as.matrix()

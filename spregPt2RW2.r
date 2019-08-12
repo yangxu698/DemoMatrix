@@ -2,8 +2,8 @@ library(dplyr)
 library(readstata13)
 library(foreach)
 library(doParallel)
-setwd("../Pt2Matrices-selected")
 source("tstats_fun.r")
+setwd("../Pt2Matrices-selected")
 core_number = 4
 ## Part1 Read the data files as matrix
 ## 4 Network Matrix
@@ -34,7 +34,7 @@ DMseN = as.data.frame(c())
 DMtstatsN = as.data.frame(c())
 deltaN = as.data.frame(c())
 
-registerDoParallel(cores_number)
+registerDoParallel(core_number)
 Result = foreach ( i = 1:4, .combine = 'cbind')  %dopar% {
 
     tstats_fun(i)

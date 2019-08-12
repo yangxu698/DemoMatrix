@@ -12,9 +12,9 @@ estcfF1 = read.dta13("estcfF1.dta") %>% as.matrix()
 
 list_all = list(estcfN1, estcfA1, estcfC1, estcfF1)
 name = c("estcfN1", "estcfA1", "estcfC1", "estcfF1")
-registerDoParallel(cores_number)
-Result_NULL = foreach( i in 1:4, .combine = 'c') %dopar% {
+registerDoParallel(core_number)
+Result_NULL = foreach( i = 1:4, .combine = 'c') %dopar% {
 
   inverse_matrix = solve(list_all[[i]])
-  write.csv(invers_matrix, paste0("../DemoMatrix/inverse_",i), row.names = FALSE)
+  write.csv(invers_matrix, paste0("../DemoMatrix/inverse_",name[i]), row.names = FALSE)
 }

@@ -16,5 +16,5 @@ registerDoParallel(core_number)
 Result_NULL = foreach( i = 1:4, .combine = 'c') %dopar% {
 
   inverse_matrix = solve(list_all[[i]])
-  write.csv(invers_matrix, paste0("../DemoMatrix/inverse_",name[i]), row.names = FALSE)
+  write.csv(inverse_matrix, paste0("../DemoMatrix/inverse_",name[i]), row.names = FALSE)
 }

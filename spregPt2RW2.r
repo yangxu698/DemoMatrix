@@ -3,7 +3,7 @@ library(readstata13)
 library(foreach)
 library(doParallel)
 setwd("../Pt2Matrices-selected")
-source("tstas_fun.r")
+source("tstats_fun.r")
 core_number = 4
 ## Part1 Read the data files as matrix
 ## 4 Network Matrix
@@ -18,7 +18,8 @@ estcfN = read.dta13("estcfN.dta") %>% as.matrix()
 estcfN1 = read.dta13("estcfN1.dta") %>% as.matrix()
 
 ## Calculation of rho, phi, beta
-estcfN1_inverse = solve(estcfN1)
+## estcfN1_inverse = solve(estcfN1)
+estcfN1_inverse = read.csv("inverse_estcfN1.csv") %>% as.matrix()
 
 d_cf_rhoN1 = estcfN %*% W_N %*% estcfN1_inverse ## 10860*10860x10860*10860
 
@@ -34,7 +35,7 @@ DMtstatsN = as.data.frame(c())
 deltaN = as.data.frame(c())
 
 registerDoParallel(cores_number)
-Result = foreach ( i in 1:length(focus), .combine = 'cbind')  %dopar% {
+Result = foreach ( i = 1:length(focus), .combine = 'cbind')  %dopar% {
 
     tstats_fun(i)
 ##    d_cfN = cbind(d_cf_rhoN1[,i], d_cf_phiN1[,i], d_cf_betaN1[,i]) ## 10860x3

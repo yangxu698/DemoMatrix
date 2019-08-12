@@ -35,7 +35,7 @@ DMtstatsN = as.data.frame(c())
 deltaN = as.data.frame(c())
 
 registerDoParallel(cores_number)
-Result = foreach ( i = 1:length(focus), .combine = 'cbind')  %dopar% {
+Result = foreach ( i = 1:4, .combine = 'cbind')  %dopar% {
 
     tstats_fun(i)
 ##    d_cfN = cbind(d_cf_rhoN1[,i], d_cf_phiN1[,i], d_cf_betaN1[,i]) ## 10860x3

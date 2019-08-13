@@ -36,7 +36,7 @@ DMtstatsN = as.data.frame(c())
 deltaN = as.data.frame(c())
 
 registerDoParallel(core_number)
-Result = foreach ( i = 1:length(focus), .combine = 'cbind')  %dopar% {
+Result = foreach ( i = focus, .combine = 'cbind')  %dopar% {
 
     tstats_fun(i)
 ##    d_cfN = cbind(d_cf_rhoN1[,i], d_cf_phiN1[,i], d_cf_betaN1[,i]) ## 10860x3
@@ -51,6 +51,7 @@ Result = foreach ( i = 1:length(focus), .combine = 'cbind')  %dopar% {
 ##    DMtstatsN = cbind(DMtstatsN, temp_DMtstatsN)
 }
 
+Result = Result %>% select(sort(colnames(Result)))
 write.csv(Result, "../DemoMatrix/Result.csv", row.names = FALSE)
 ## write.csv(DMseN, "../DemoMatrix/DMseN.csv", row.names = FALSE)
 ## write.csv(DMtstatsN, "../DemoMatrix/DMtstatsN.csv", row.names = FALSE)

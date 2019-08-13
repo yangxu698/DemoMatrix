@@ -11,15 +11,15 @@ core_number = 4
 ## 4 estc Matrix
 
 ##### Network-N  #####
-W_N = read.dta13("W_N.dta") %>% select(afg1900:zzb20175) %>% as.matrix()
-Vcm = read.dta13("Vcm.dta") %>% as.matrix()
-VCVM = read.dta13("VCVM.dta") %>% as.matrix()
-estcfN = read.dta13("estcfN.dta") %>% as.matrix()
-estcfN1 = read.dta13("estcfN1.dta") %>% as.matrix()
+W_N = read.dta13("W_N.dta") %>% select(afg1900:zzb20175) %>% Matrix(sparse = TRUE)
+Vcm = read.dta13("Vcm.dta") %>% Matrix()
+VCVM = read.dta13("VCVM.dta") %>% Matrix()
+estcfN = read.dta13("estcfN.dta") %>% Matrix(sparse = TRUE)
+estcfN1 = read.dta13("estcfN1.dta") %>% Matrix(sparse = TRUE)
 
 ## Calculation of rho, phi, beta
 ## estcfN1_inverse = solve(estcfN1)
-estcfN1_inverse = read.csv("inverse_estcfN1.csv") %>% as.matrix()
+estcfN1_inverse = read.csv("inverse_estcfN1.csv") %>% Matrix(sparse = TRUE)
 
 d_cf_rhoN1 = estcfN %*% W_N %*% estcfN1_inverse ## 10860*10860x10860*10860
 

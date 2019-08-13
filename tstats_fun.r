@@ -7,6 +7,7 @@ tstats_fun = function(i){
 
     temp_DMseN = sqrt( temp_deltaN[focus] )
     temp_DMtstatsN = estcfN[,i]/temp_DMseN
-    combined_result = cbind(paste0("DMseN_",i) = temp_DMseN, paste0("DMtstatsN_",i)=temp_DMtstatsN)
+    combined_result = cbind(setNames(data.frame(temp_DMseN),  paste0("DMseN_",i)),
+                            setNames(data.frame(temp_DMtstatsN), paste0("DMtstatsN_",i)) )
     return(combined_result)
 }

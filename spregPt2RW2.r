@@ -2,6 +2,7 @@ library(dplyr)
 library(readstata13)
 library(foreach)
 library(doParallel)
+library(Matrix)
 source("tstats_fun.r")
 setwd("../Pt2Matrices-selected")
 core_number = 4

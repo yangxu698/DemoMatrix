@@ -6,10 +6,10 @@ library(Matrix)
 setwd("../Pt2Matrices-selected")
 core_number = 4
 
-estcfN1 = read.dta13("estcfN1.dta") %>% Matrix(sparse = TRUE)
-estcfA1 = read.dta13("estcfA1.dta") %>% Matrix(sparse = TRUE)
-estcfC1 = read.dta13("estcfC1.dta") %>% Matrix(sparse = TRUE)
-estcfF1 = read.dta13("estcfF1.dta") %>% Matrix(sparse = TRUE)
+estcfN1 = read.dta13("estcfN1.dta") %>% as.matrix() %>% Matrix(sparse = TRUE)
+estcfA1 = read.dta13("estcfA1.dta") %>% as.matrix() %>% Matrix(sparse = TRUE)
+estcfC1 = read.dta13("estcfC1.dta") %>% as.matrix() %>% Matrix(sparse = TRUE)
+estcfF1 = read.dta13("estcfF1.dta") %>% as.matrix() %>% Matrix(sparse = TRUE)
 
 list_all = list(estcfN1, estcfA1, estcfC1, estcfF1)
 name = c("estcfN1", "estcfA1", "estcfC1", "estcfF1")

@@ -5,7 +5,7 @@ library(doParallel)
 library(Matrix)
 source("tstats_fun.r")
 setwd("../Pt2Matrices-selected")
-core_number = 4
+core_number = 12 
 ## Part1 Read the data files as matrix
 ## 4 Network Matrix
 ## 2 var-cov Matrix
@@ -36,7 +36,7 @@ DMtstatsN = as.data.frame(c())
 deltaN = as.data.frame(c())
 
 registerDoParallel(core_number)
-Result = foreach ( i = 1:4, .combine = 'cbind')  %dopar% {
+Result = foreach ( i = 1:length(focus), .combine = 'cbind')  %dopar% {
 
     tstats_fun(i)
 ##    d_cfN = cbind(d_cf_rhoN1[,i], d_cf_phiN1[,i], d_cf_betaN1[,i]) ## 10860x3

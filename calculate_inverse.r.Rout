@@ -1,0 +1,58 @@
+
+R version 3.5.3 (2019-03-11) -- "Great Truth"
+Copyright (C) 2019 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> library(dplyr)
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> library(readstata13)
+> library(foreach)
+> library(doParallel)
+Loading required package: iterators
+Loading required package: parallel
+> setwd("../Pt2Matrices-selected")
+> core_number = 4
+> 
+> estcfN1 = read.dta13("estcfN1.dta") %>% as.matrix()
+> estcfA1 = read.dta13("estcfA1.dta") %>% as.matrix()
+> estcfC1 = read.dta13("estcfC1.dta") %>% as.matrix()
+> estcfF1 = read.dta13("estcfF1.dta") %>% as.matrix()
+> 
+> list_all = list(estcfN1, estcfA1, estcfC1, estcfF1)
+> name = c("estcfN1", "estcfA1", "estcfC1", "estcfF1")
+> registerDoParallel(core_number)
+> Result_NULL = foreach( i = 1:4, .combine = 'c') %dopar% {
++ 
++   inverse_matrix = solve(list_all[[i]])
++   write.csv(inverse_matrix, paste0("../DemoMatrix/inverse_",name[i]), row.names = FALSE)
++ }
+> 
+> proc.time()
+    user   system  elapsed 
+7911.941   40.915 3500.204 

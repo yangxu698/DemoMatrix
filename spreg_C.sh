@@ -1,10 +1,10 @@
 #!/bin/csh
 #$ -M yxu6@nd.edu
 #$ -m abe
-#$ -pe smp 4 
+#$ -pe smp 4
 #$ -q long ##*@@emichaellab
-#$ -N USA_test
+#$ -N C_network
 
 module load R
 
-R CMD BATCH spregPt2RW2.r
+R CMD BATCH spregPt2RW2_C.r

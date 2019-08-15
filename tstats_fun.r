@@ -1,13 +1,13 @@
 tstats_fun = function(i){
 
-    d_cfN = cbind(d_cf_rhoN1[,i], d_cf_phiN1[,i], d_cf_betaN1[,i]) %>% Matrix() ## 10860x3
+    d_cf = cbind(d_cf_rho1[,i], d_cf_phi1[,i], d_cf_beta1[,i]) %>% Matrix() ## 10860x3
 
-    deltaN1 = d_cfN %*% VCVMn %*% t(d_cfN) ## 10860x3 * 3*3 * 3*10860
-    temp_deltaN = diag(deltaN1) ## 10860
+    delta1 = d_cf %*% VCVM_sub %*% t(d_cf) ## 10860x3 * 3*3 * 3*10860
+    temp_delta = diag(delta1) ## 10860
 
-    temp_DMseN = sqrt( temp_deltaN )
-    temp_DMtstatsN = estcfN[,i]/temp_DMseN
-    combined_result = cbind(setNames(data.frame(temp_DMseN),  paste0("DMseN_",i)),
-                            setNames(data.frame(temp_DMtstatsN), paste0("DMtstatsN_",i)) )
+    temp_DMse = sqrt( temp_delta )
+    temp_DMtstats = estcf[,i]/temp_DMse
+    combined_result = cbind(setNames(data.frame(temp_DMse),  paste0("DMse_",i)),
+                            setNames(data.frame(temp_DMtstats), paste0("DMtstats_",i)) )
     return(combined_result)
 }

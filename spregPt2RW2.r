@@ -20,7 +20,7 @@ estcfN1 = read.dta13("estcfN1.dta") %>% as.matrix() %>% Matrix()
 
 ## Calculation of rho, phi, beta
 ## estcfN1_inverse = solve(estcfN1)
-estcfN1_inverse = read.csv("inverse_estcfN1.csv") %>% as.matrix() %>% Matrix()
+estcfN1_inverse = Matrix::solve(estcfN1) 
 
 d_cf_rhoN1 = estcfN %*% W_N %*% estcfN1_inverse ## 10860*10860x10860*10860
 

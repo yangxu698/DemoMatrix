@@ -30,12 +30,12 @@ d_cf_beta1 =  estcf1_inverse ## 10860x10860
 
 VCVM_sub = VCVM[c(3,5,6), c(3,5,6)]  ## 3*3
 
-focus = 1:10860
+## focus = 1:10860
 ## reset_colnames = c(paste0("DMseN_",focus), paste0("DMtstatsN_",focus))
 deltaN = as.data.frame(c())
 
 registerDoParallel(core_number)
-Result = foreach ( i = focus, .combine = 'cbind')  %dopar% {
+Result = foreach ( i = 1:10860, .combine = 'cbind')  %dopar% {
 
     tstats_fun(i)
 }

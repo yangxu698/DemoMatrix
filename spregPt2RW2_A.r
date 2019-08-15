@@ -22,7 +22,7 @@ estcf1 = read.dta13("estcfA1.dta") %>% as.matrix() %>% Matrix()
 ## estcfA1_inverse = solve(estcfA1)
 estcf1_inverse = Matrix::solve(estcf1)
 
-d_cf_rho = estcf %*% W_ %*% estcf1_inverse ## 10860*10860x10860*10860
+d_cf_rho1 = estcf %*% W_ %*% estcf1_inverse ## 10860*10860x10860*10860
 
 d_cf_phi1 = estcf %*% estcf1_inverse  ## 10860x10860
 

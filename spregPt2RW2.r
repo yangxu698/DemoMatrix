@@ -20,7 +20,7 @@ estcfN1 = read.dta13("estcfN1.dta") %>% as.matrix() %>% Matrix()
 
 ## Calculation of rho, phi, beta
 ## estcfN1_inverse = solve(estcfN1)
-estcfN1_inverse = Matrix::solve(estcfN1) 
+estcfN1_inverse = Matrix::solve(estcfN1)
 
 d_cf_rhoN1 = estcfN %*% W_N %*% estcfN1_inverse ## 10860*10860x10860*10860
 
@@ -31,8 +31,7 @@ d_cf_betaN1 =  estcfN1_inverse ## 10860x10860
 VCVMn = VCVM[c(1,5,6), c(1,5,6)]  ## 3*3
 
 focus = seq(169, 10860, 181)
-DMseN = as.data.frame(c())
-DMtstatsN = as.data.frame(c())
+reset_colnames = c(paste0("DMseN_",focus), paste0("DMstatsN_",focus))
 deltaN = as.data.frame(c())
 
 registerDoParallel(core_number)
@@ -51,7 +50,9 @@ Result = foreach ( i = focus, .combine = 'cbind')  %dopar% {
 ##    DMtstatsN = cbind(DMtstatsN, temp_DMtstatsN)
 }
 
-Result = Result %>% select(sort(colnames(Result)))
+Result = Result %>% select(reset_colnames)
+geo_time_info = read.csv("geo_time_info.csv")
+cbind(geo_time_info, Result) -> Result
 write.csv(Result, "../DemoMatrix/Result.csv", row.names = FALSE)
 ## write.csv(DMseN, "../DemoMatrix/DMseN.csv", row.names = FALSE)
 ## write.csv(DMtstatsN, "../DemoMatrix/DMtstatsN.csv", row.names = FALSE)

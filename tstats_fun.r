@@ -5,7 +5,7 @@ tstats_fun = function(i){
     deltaN1 = d_cfN %*% VCVMn %*% t(d_cfN) ## 10860x3 * 3*3 * 3*10860
     temp_deltaN = diag(deltaN1) ## 10860
 
-    temp_DMseN = sqrt( temp_deltaN[focus] )
+    temp_DMseN = sqrt( temp_deltaN )
     temp_DMtstatsN = estcfN[,i]/temp_DMseN
     combined_result = cbind(setNames(data.frame(temp_DMseN),  paste0("DMseN_",i)),
                             setNames(data.frame(temp_DMtstatsN), paste0("DMtstatsN_",i)) )

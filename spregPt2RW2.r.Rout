@@ -54,7 +54,7 @@ Loading required package: parallel
 > 
 > ## Calculation of rho, phi, beta
 > ## estcfN1_inverse = solve(estcfN1)
-> estcfN1_inverse = Matrix::solve(estcfN1) 
+> estcfN1_inverse = Matrix::solve(estcfN1)
 > 
 > d_cf_rhoN1 = estcfN %*% W_N %*% estcfN1_inverse ## 10860*10860x10860*10860
 > 
@@ -65,8 +65,7 @@ Loading required package: parallel
 > VCVMn = VCVM[c(1,5,6), c(1,5,6)]  ## 3*3
 > 
 > focus = seq(169, 10860, 181)
-> DMseN = as.data.frame(c())
-> DMtstatsN = as.data.frame(c())
+> reset_colnames = c(paste0("DMseN_",focus), paste0("DMstatsN_",focus))
 > deltaN = as.data.frame(c())
 > 
 > registerDoParallel(core_number)
@@ -85,7 +84,10 @@ Loading required package: parallel
 + ##    DMtstatsN = cbind(DMtstatsN, temp_DMtstatsN)
 + }
 > 
-> Result = Result %>% select(sort(colnames(Result)))
+> Result = Result %>% select(reset_colnames)
+Error: Unknown columns `DMstatsN_169`, `DMstatsN_350`, `DMstatsN_531`, `DMstatsN_712`, `DMstatsN_893` and ... 
+> geo_time_info = read.csv("geo_time_info.csv")
+> cbind(geo_time_info, Result) -> Result
 > write.csv(Result, "../DemoMatrix/Result.csv", row.names = FALSE)
 > ## write.csv(DMseN, "../DemoMatrix/DMseN.csv", row.names = FALSE)
 > ## write.csv(DMtstatsN, "../DemoMatrix/DMtstatsN.csv", row.names = FALSE)
@@ -127,4 +129,4 @@ Loading required package: parallel
 > 
 > proc.time()
     user   system  elapsed 
-3245.918  120.359 3116.454 
+3799.796  270.906 3830.254 

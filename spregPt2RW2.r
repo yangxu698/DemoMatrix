@@ -5,22 +5,22 @@ library(doParallel)
 library(Matrix)
 source("tstats_fun.r")
 setwd("../Pt2Matrices-selected")
-core_number = 8
+core_number = 4
 ## Part1 Read the data files as matrix
 ## 4 Network Matrix
 ## 2 var-cov Matrix
 ## 4 estc Matrix
 
 ##### Network-N  #####
-W_N = read.dta13("W_N.dta") %>% select(afg1900:zzb20175) %>% as.matrix() %>% Matrix(sparse = TRUE)
+W_N = read.dta13("W_N.dta") %>% select(afg1900:zzb20175) %>% as.matrix() %>% Matrix()
 Vcm = read.dta13("Vcm.dta") %>% as.matrix() %>% Matrix()
 VCVM = read.dta13("VCVM.dta") %>% as.matrix() %>% Matrix()
-estcfN = read.dta13("estcfN.dta") %>% as.matrix() %>% Matrix(sparse = TRUE)
-estcfN1 = read.dta13("estcfN1.dta") %>% as.matrix() %>% Matrix(sparse = TRUE)
+estcfN = read.dta13("estcfN.dta") %>% as.matrix() %>% Matrix()
+estcfN1 = read.dta13("estcfN1.dta") %>% as.matrix() %>% Matrix()
 
 ## Calculation of rho, phi, beta
 ## estcfN1_inverse = solve(estcfN1)
-estcfN1_inverse = read.csv("inverse_estcfN1.csv") %>% as.matrix() %>% Matrix(sparse = TRUE)
+estcfN1_inverse = read.csv("inverse_estcfN1.csv") %>% as.matrix() %>% Matrix()
 
 d_cf_rhoN1 = estcfN %*% W_N %*% estcfN1_inverse ## 10860*10860x10860*10860
 

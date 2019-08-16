@@ -1,8 +1,8 @@
 #!/bin/csh
 #$ -M yxu6@nd.edu
 #$ -m abe
-#$ -pe smp 4
-#$ -q long ##*@@emichaellab
+#$ -pe smp 24
+#$ -q debug ##*@@emichaellab
 #$ -N C_network
 
 module load R

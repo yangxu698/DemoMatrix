@@ -9,5 +9,8 @@ tstats_fun = function(i){
     temp_DMtstats = estcf[,i]/temp_DMse
     combined_result = cbind(setNames(data.frame(temp_DMse),  paste0("DMse_",i)),
                             setNames(data.frame(temp_DMtstats), paste0("DMtstats_",i)) )
+    if(i > 10835 ){
+     print(i)
+    }
     return(combined_result)
 }

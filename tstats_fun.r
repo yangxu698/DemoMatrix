@@ -7,10 +7,11 @@ tstats_fun = function(i){
 
     temp_DMse = sqrt( temp_delta )
     temp_DMtstats = estcf[,i]/temp_DMse
+    if(length(temp_DMse) != 10860 | length(temp_DMtstas) != 10860){
+     print(c(i, length(temp_delta)) )
+   } else {
     combined_result = cbind(setNames(data.frame(temp_DMse),  paste0("DMse_",i)),
                             setNames(data.frame(temp_DMtstats), paste0("DMtstats_",i)) )
-    if(i > 10835 ){
-     print(i)
-    }
+   }
     return(combined_result)
 }

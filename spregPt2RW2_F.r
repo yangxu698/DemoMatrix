@@ -6,7 +6,7 @@ library(doParallel)
 library(Matrix)
 source("tstats_fun.r")
 setwd("../Pt2Matrices-selected")
-core_number = 24
+core_number = 4
 ## Part1 Read the data files as matrix
 ## 4 Network Matrix
 ## 2 var-cov Matrix
